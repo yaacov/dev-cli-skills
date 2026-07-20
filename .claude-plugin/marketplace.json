@@ -1,0 +1,19 @@
+{
+  "name": "yaacov",
+  "owner": {
+    "name": "yaacov"
+  },
+  "metadata": {
+    "description": "Developer CLI skills for GitHub and Jira"
+  },
+  "plugins": [
+    {
+      "name": "dev-cli-skills",
+      "source": {
+        "source": "github",
+        "repo": "yaacov/dev-cli-skills"
+      },
+      "description": "Claude Code skills for GitHub (gh) and Jira CLI tools"
+    }
+  ]
+}

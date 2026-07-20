@@ -1,0 +1,11 @@
+{
+  "name": "dev-cli-skills",
+  "description": "Claude Code skills for GitHub (gh) and Jira CLI tools — list PRs, view issues, search code, check sprints, and more",
+  "author": {
+    "name": "yaacov"
+  },
+  "homepage": "https://github.com/yaacov/dev-cli-skills",
+  "repository": "https://github.com/yaacov/dev-cli-skills",
+  "license": "Apache-2.0",
+  "keywords": ["github", "jira", "cli", "pull-requests", "issues", "sprints"]
+}
