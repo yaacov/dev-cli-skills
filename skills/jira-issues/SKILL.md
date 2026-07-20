@@ -68,6 +68,14 @@ jira epic list --plain
 jira epic list <EPIC-KEY> --plain --no-truncate
 ```
 
+### Get child issues (subtasks) of a parent
+
+```bash
+jira issue list -q "parent = <ISSUE-KEY>" --plain --no-truncate
+jira issue list -q "parent = <ISSUE-KEY> AND status != Done" --plain
+jira issue list -P <PARENT-KEY> --plain --no-truncate
+```
+
 ### Search with JQL
 
 > JQL and output format reference: [ref-search.md](ref-search.md)

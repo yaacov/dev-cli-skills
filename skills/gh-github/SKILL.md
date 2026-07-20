@@ -80,6 +80,14 @@ gh pr list -R <owner>/<repo>
 gh issue list -R <owner>/<repo> -s open
 ```
 
+### Read file content from a remote repository
+
+```bash
+gh api repos/<owner>/<repo>/contents/<path> --jq '.content' | base64 -d
+gh api repos/<owner>/<repo>/contents/<path>?ref=<branch> --jq '.content' | base64 -d
+gh api repos/<owner>/<repo>/contents/<directory> --jq '.[].name'
+```
+
 ### Structured JSON output
 
 Use `--json` with `--jq` for machine-readable output:
