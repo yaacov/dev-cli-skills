@@ -8,6 +8,7 @@ gh search prs --author=<username> --state=open
 gh search prs --repo=<owner>/<repo> --merged-at=">2026-04-20"
 gh search prs --reviewed-by=<username> --state=closed -L 20
 gh search prs --involves=<username> --updated=">2026-06-01"
+gh search prs --author=<username> --created="<YYYY-MM-DD>..<YYYY-MM-DD>" --limit 100 --json repository,title,state,createdAt,url
 ```
 
 ## Search issues
@@ -84,3 +85,41 @@ gh api repos/<owner>/<repo>/issues -f title="Title" -f body="Body"           # P
 gh api repos/<owner>/<repo>/issues/<number> -X PATCH -f state="closed"       # PATCH: close issue
 gh api repos/<owner>/<repo>/issues/<number>/comments -f body="comment"       # POST: add comment
 ```
+
+### GraphQL API
+
+Use `gh api graphql` for queries not available through REST, such as contribution statistics:
+
+```bash
+# Contribution stats for a date range
+gh api graphql -f query='
+{
+  viewer {
+    login
+    contributionsCollection(from: "<START>T00:00:00Z", to: "<END>T23:59:59Z") {
+      totalCommitContributions
+      totalPullRequestContributions
+      totalPullRequestReviewContributions
+      totalIssueContributions
+      totalRepositoriesWithContributedCommits
+      contributionCalendar {
+        totalContributions
+      }
+    }
+  }
+}'
+
+# Contributions for a specific user (requires their node ID)
+gh api graphql -f query='
+{
+  user(login: "<username>") {
+    contributionsCollection(from: "<START>T00:00:00Z", to: "<END>T23:59:59Z") {
+      totalCommitContributions
+      totalPullRequestContributions
+      totalPullRequestReviewContributions
+    }
+  }
+}'
+```
+
+Replace `<START>` and `<END>` with ISO dates (e.g. `2026-04-20`, `2026-07-20`).

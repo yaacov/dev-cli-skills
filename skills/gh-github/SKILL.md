@@ -97,6 +97,23 @@ gh pr list --json number,title,state,author,updatedAt --jq '.[] | "\(.number) \(
 gh issue list --json number,title,labels --jq '.[] | select(.labels | length > 0)'
 ```
 
+### User activity / contributions
+
+Query your contribution stats and authored/reviewed PRs over a time period:
+
+```bash
+# Contribution summary for a date range (commits, PRs, reviews)
+gh api graphql -f query='{ viewer { login contributionsCollection(from: "<START>T00:00:00Z", to: "<END>T23:59:59Z") { totalCommitContributions totalPullRequestContributions totalPullRequestReviewContributions totalRepositoriesWithContributedCommits contributionCalendar { totalContributions } } } }'
+
+# PRs you authored in a date range
+gh search prs --author=<username> --created="<START>..<END>" --limit 100 --json repository,title,state,createdAt,url
+
+# PRs you reviewed in a date range
+gh search prs --reviewed-by=<username> --created="<START>..<END>" --limit 100 --json repository,title,state,createdAt,url
+```
+
+> Full GraphQL and search reference: [ref-search.md](ref-search.md)
+
 ## Self-Learning Rule
 
 When you encounter an unfamiliar `gh` command or need to verify flags, always run:

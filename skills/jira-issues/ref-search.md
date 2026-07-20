@@ -73,6 +73,27 @@ jira issue list -q "'Epic Link' = <EPIC-KEY>" --plain
 | `endOfDay()` | End of today |
 | `membersOf("group")` | Members of a group |
 
+## Mixing JQL with CLI filter flags
+
+The `-q` flag and CLI filter flags (`--updated-after`, `--created-after`, `-a`, `-s`, `--columns`, etc.) can be combined, but **avoid putting `ORDER BY` inside `-q` when using other CLI flags** — the CLI may append its own clauses to the JQL, causing parse errors like `Expecting ',' but got 'ORDER'`.
+
+**Best practice**: use CLI flags for date/assignee/status filtering when available. Use `-q` only for conditions that have no CLI flag equivalent (e.g. `reporter`, `resolution`, `component`).
+
+```bash
+# GOOD: CLI flags for dates/assignee, -q only for conditions without CLI equivalents
+jira issue list -a "$(jira me)" --updated-after 2026-04-20 --columns KEY,SUMMARY,STATUS --plain --no-truncate
+jira issue list -q "reporter = currentUser() AND assignee != currentUser()" --updated-after 2026-04-20 --plain --no-truncate
+
+# BAD: ORDER BY inside -q conflicts with --columns
+jira issue list -q "assignee = currentUser() AND updated >= '2026-04-20' ORDER BY updated DESC" --columns KEY,SUMMARY,STATUS --plain
+```
+
+When using `-q` **without** other CLI flags, `ORDER BY` works fine:
+
+```bash
+jira issue list -q "project = <PROJECT> AND status = 'In Progress' ORDER BY priority DESC" --plain
+```
+
 ## Date filter flags (alternative to JQL)
 
 These flags are simpler than JQL for basic date filtering:

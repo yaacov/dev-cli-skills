@@ -85,6 +85,18 @@ jira issue list -q "assignee = currentUser() AND updated >= -7d ORDER BY updated
 jira issue list -q "project = <PROJECT> AND status = 'In Progress'" --plain
 ```
 
+### User activity
+
+Query your assigned and reported issues over a time period. Use CLI flags for date/assignee filtering and `-q` only for conditions without CLI equivalents (see [ref-search.md](ref-search.md) for details on mixing JQL with CLI flags).
+
+```bash
+# Issues assigned to you, updated in a date range
+jira issue list -a "$(jira me)" --updated-after <YYYY-MM-DD> --columns KEY,SUMMARY,STATUS,PRIORITY,UPDATED --plain --no-truncate
+
+# Issues you reported but are assigned to others
+jira issue list -q "reporter = currentUser() AND assignee != currentUser()" --updated-after <YYYY-MM-DD> --columns KEY,SUMMARY,STATUS,UPDATED --plain --no-truncate
+```
+
 ### Open issue in browser
 
 ```bash
