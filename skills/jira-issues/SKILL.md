@@ -37,14 +37,12 @@ The Jira CLI requires a valid `JIRA_API_TOKEN` (Atlassian API token). Tokens exp
 
 ## Ticket Links
 
-When presenting Jira issues to the user, **always include a clickable link** for each ticket. Derive the base URL from the Jira server configured in `jira serverinfo` or `~/.config/.jira/.config.yml` (the `server:` field).
+When presenting Jira issues to the user, derive the base URL from the Jira server configured in `jira serverinfo` or `~/.config/.jira/.config.yml` (the `server:` field), and show the link so the user can browse the ticket in a browser.
 
 Format: `https://<server>/browse/<ISSUE-KEY>`
 
 For example, if the server is `redhat.atlassian.net` and the ticket is `MTV-1382`, show:
 **MTV-1382** — https://redhat.atlassian.net/browse/MTV-1382
-
-Apply this to every issue key mentioned in your response — whether from `jira issue list`, `jira issue view`, search results, or any other output that contains issue keys.
 
 ## Common Workflows
 
