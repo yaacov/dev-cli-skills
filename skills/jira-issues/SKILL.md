@@ -29,6 +29,23 @@ If not installed: `go install github.com/ankitpokhrel/jira-cli/cmd/jira@latest`,
 
 The `jira` binary may be at `~/go/bin/jira` — use the full path if it is not on PATH.
 
+## Authentication & Token Safety
+
+The Jira CLI requires a valid `JIRA_API_TOKEN` (Atlassian API token). Tokens expire or get revoked periodically — if `jira me` returns an authentication error, the user needs to generate a new token at https://id.atlassian.com/manage-profile/security/api-tokens and re-run `jira init`.
+
+**Never display or log the API token in clear text.** Do not echo, print, or include `$JIRA_API_TOKEN` in command output. If you need to verify authentication, use `jira me` — never inspect the token value itself.
+
+## Ticket Links
+
+When presenting Jira issues to the user, **always include a clickable link** for each ticket. Derive the base URL from the Jira server configured in `jira serverinfo` or `~/.config/.jira/.config.yml` (the `server:` field).
+
+Format: `https://<server>/browse/<ISSUE-KEY>`
+
+For example, if the server is `redhat.atlassian.net` and the ticket is `MTV-1382`, show:
+**MTV-1382** — https://redhat.atlassian.net/browse/MTV-1382
+
+Apply this to every issue key mentioned in your response — whether from `jira issue list`, `jira issue view`, search results, or any other output that contains issue keys.
+
 ## Common Workflows
 
 ### Check your identity and server
