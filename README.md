@@ -1,6 +1,6 @@
 # dev-cli-skills
 
-AI agent skills for the **GitHub CLI** (`gh`), **Jira CLI** (`jira`), and the **Forklift/MTV CLI** (`oc mtv`). Works with [Cursor](https://www.cursor.com/) and [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+AI agent skills for the **GitHub CLI** (`gh`), **Jira CLI** (`jira`), the **Forklift/MTV CLI** (`oc mtv`), and **Docker** (distro debugging). Works with [Cursor](https://www.cursor.com/) and [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
 
 ## What Can I Do with These Skills?
 
@@ -15,6 +15,8 @@ Just open a chat and ask:
 | *"Show the current sprint status"* | **jira-issues** |
 | *"Find all open bugs in PROJECT created this month"* | **jira-issues** |
 | *"Run the manual test flow for the Forklift feature I just built"* | **mtv-dev** |
+| *"What does my RPM install on UBI 9? Check the config files"* | **docker-distro** |
+| *"Is /etc/chrony.conf different between Ubuntu 22.04 and 24.04?"* | **docker-distro** |
 
 ## Skills
 
@@ -23,6 +25,7 @@ Just open a chat and ask:
 | [gh-github](skills/gh-github/SKILL.md) | List PRs, view issues, search code, check CI status, review GitHub activity |
 | [jira-issues](skills/jira-issues/SKILL.md) | List issues, view tickets, check sprints, search with JQL, manage epics |
 | [mtv-dev](skills/mtv-dev/SKILL.md) | Run the manual Forklift/MTV feature test flow: namespace, vSphere provider from `GOVC_*`, migration plan |
+| [docker-distro](skills/docker-distro/SKILL.md) | Debug distros and versions by running their Docker image with a small test script — installed packages, files, configs, behavior |
 
 ## Quick Start
 
@@ -70,7 +73,7 @@ claude plugin uninstall dev-cli-skills@yaacov
 ### Symlinks
 
 ```bash
-for skill in gh-github jira-issues mtv-dev; do
+for skill in gh-github jira-issues mtv-dev docker-distro; do
   rm -f ~/.cursor/skills/"$skill"
   rm -f ~/.claude/skills/"$skill"
 done
@@ -103,6 +106,14 @@ jira init
 ```bash
 oc mtv --help   # kubectl-mtv plugin
 ```
+
+### Docker
+
+```bash
+docker --version
+```
+
+On Apple Silicon, the skill runs x86_64 images with `--platform linux/amd64` (QEMU emulation) — checks still work, just slower.
 
 ## Design Principles
 
