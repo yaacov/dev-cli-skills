@@ -1,6 +1,6 @@
 # dev-cli-skills
 
-AI agent skills for the **GitHub CLI** (`gh`), **Jira CLI** (`jira`), the **Forklift/MTV CLI** (`oc mtv`), and **Docker** (distro debugging). Works with [Cursor](https://www.cursor.com/) and [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+AI agent skills for the **GitHub CLI** (`gh`), **Jira CLI** (`jira`), the **Forklift/MTV CLI** (`oc mtv`), and **Docker** (distro debugging). Installed into `~/.agents/skills` for agents that load user-wide skills from that path.
 
 ## What Can I Do with These Skills?
 
@@ -29,15 +29,12 @@ Just open a chat and ask:
 
 ## Quick Start
 
-### Cursor / Claude Code
-
 ```bash
 curl -sSL https://raw.githubusercontent.com/yaacov/dev-cli-skills/main/install.sh | bash
 ```
 
 The script clones the repo to `~/.local/share/dev-cli-skills` (or pulls if
-already present) and creates user-wide symlinks in `~/.cursor/skills` and/or
-`~/.claude/skills` depending on which directories exist.
+already present) and creates user-wide symlinks in `~/.agents/skills`.
 
 Run the same command again any time to **update**.
 
@@ -48,34 +45,13 @@ git clone https://github.com/yaacov/dev-cli-skills.git ~/.local/share/dev-cli-sk
 bash ~/.local/share/dev-cli-skills/install.sh
 ```
 
-### Claude Code Plugin (alternative)
-
-```bash
-claude plugin marketplace add yaacov/dev-cli-skills
-claude plugin install dev-cli-skills@yaacov
-```
-
-To update later:
-
-```bash
-claude plugin marketplace update yaacov
-claude plugin install dev-cli-skills@yaacov
-```
-
-To uninstall:
-
-```bash
-claude plugin uninstall dev-cli-skills@yaacov
-```
-
 ## Removal
 
 ### Symlinks
 
 ```bash
 for skill in gh-github jira-issues mtv-dev docker-distro; do
-  rm -f ~/.cursor/skills/"$skill"
-  rm -f ~/.claude/skills/"$skill"
+  rm -f ~/.agents/skills/"$skill"
 done
 ```
 
